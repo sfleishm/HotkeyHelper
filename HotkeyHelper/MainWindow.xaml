@@ -1,0 +1,153 @@
+﻿<Window x:Class="HotkeyHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotkeyHelper"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" MinWidth="100"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2.5*" MinWidth="250" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ListView Grid.Column="0" Name="Processes">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="Auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        <!--<Rectangle Grid.Column="2" Fill="Purple"></Rectangle>-->
+        <!--<TextBlock Grid.Column="2">Hello There</TextBlock>-->
+        <ListView Grid.Column="2" Name="Hotkeys">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Action" DisplayMemberBinding="{Binding Action}" Width="Auto" />
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="Auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--<Rectangle Grid.Column="3" Fill="Green"></Rectangle>-->
+
+        <Grid Grid.Column="3" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0">Add a new Hotkey</Label>
+            <Label Grid.Row="1">Action:</Label>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,10" Name="HotkeyAction" Text="{Binding HotkeyAction}" />
+            <Label Grid.Row="2">Description:</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" Name="HotkeyDescription" Text="{Binding HotkeyDescription}" />
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Name="BtnAddNewHotkey" Click="BtnAddNewHotkey_Click">Add</Button>
+            <Button Grid.Row="4" Grid.ColumnSpan="2" Name="btnRefreshProcesses" Click="btnRefreshProcesses_Click">Refresh</Button>
+
+        </Grid>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+
+    </Grid>
+    
+    <!--<DockPanel>
+        <Grid>
+            <ListView Width="200" Name="Processes" DockPanel.Dock="Left">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                    </GridView>
+                </ListView.View>
+                --><!--<ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <Button>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>--><!--
+            </ListView>
+            <Button Name="btnRefreshProcesses" Click="btnRefreshProcesses_Click">Refresh</Button>
+        </Grid>
+        --><!--<StackPanel DockPanel.Dock="Left">
+            <ListView Width="200" Name="Processes" DockPanel.Dock="Left">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <Button>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Name="btnRefreshProcesses" Click="btnRefreshProcesses_Click">Refresh</Button>
+        </StackPanel>
+
+        <Button DockPanel.Dock="Top">Top</Button>
+        <Button DockPanel.Dock="Right">Right</Button>
+        <Button DockPanel.Dock="Bottom">Bottom</Button>
+        <Button>Center</Button>--><!--
+    </DockPanel>-->
+
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock FontSize="55" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">Left side</TextBlock>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+        <TextBlock Grid.Column="2" FontSize="55" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">Right side</TextBlock>
+        <StackPanel Grid.Column="1">
+            <ListView Width="200" Name="Processes" Grid.Column="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <Button>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Name="btnRefreshProcesses" Click="btnRefreshProcesses_Click">Refresh</Button>
+        </StackPanel>
+    </Grid>-->
+    <!--<DockPanel>
+    <StackPanel DockPanel.Dock="Left">
+        <ListView Width="200" Name="Processes" DockPanel.Dock="Left">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Button>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </Button>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Name="btnRefreshProcesses" Click="btnRefreshProcesses_Click">Refresh</Button>
+    </StackPanel>
+
+    <Button DockPanel.Dock="Top">Top</Button>
+    <Button DockPanel.Dock="Right">Right</Button>
+    <Button DockPanel.Dock="Bottom">Bottom</Button>
+    <Button>Center</Button>
+</DockPanel>-->
+</Window>

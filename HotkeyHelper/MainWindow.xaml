@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotkeyHelper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Hotkey Helper" Height="450" Width="800">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,6 +25,16 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="{Binding Name}" Click="ClickMe_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Background" Value="#0078D7"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                 </Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -32,7 +42,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <ListView Grid.Column="2" Name="Hotkeys">
             <ListView.View>
                 <GridView>
@@ -53,10 +63,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0">Action:</Label>
-            <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" Name="HotkeyAction" Text="{Binding HotkeyAction}" />
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" Name="HotkeyAction" Text="{Binding HotkeyAction}" local:TextBoxHelper.Placeholder="new action" />
             <Label Grid.Row="1">Description:</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" Name="HotkeyDescription" Text="{Binding HotkeyDescription}" />
-            <Button Grid.Row="2" Grid.ColumnSpan="2" Name="BtnAddNewHotkey" Click="BtnAddNewHotkey_Click">Add a new hotkey</Button>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" Name="HotkeyDescription" Text="{Binding HotkeyDescription}" local:TextBoxHelper.Placeholder="new description" />
+            <Button Grid.Row="2" Grid.ColumnSpan="2" Name="BtnAddNewHotkey" Click="BtnAddNewHotkey_Click" Background="#28a745">Add a new hotkey</Button>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -64,11 +74,18 @@
                 <ColumnDefinition Width="10*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Name="NewJson" Text="{Binding NewJson}"></TextBox>
-            <Button Grid.Column="1" Name="BtnAddNewJson" Click="BtnAddNewJson_Click">add new json</Button>
+            <TextBox Grid.Column="0" Name="NewJson" Text="{Binding NewJson}" local:TextBoxHelper.Placeholder="type here"></TextBox>
+            <Button Grid.Column="1" Name="BtnAddNewJson" Click="BtnAddNewJson_Click" Background="#28a745">add new json</Button>
         </Grid>
-            
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0">Currently showing:</TextBlock>
+            <TextBlock Grid.Row="1" Text="{Binding CurrentJsonFileLocation}"></TextBlock>
+        </Grid>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
     </Grid>
 </Window>

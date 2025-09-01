@@ -20,11 +20,24 @@ namespace HotkeyHelper
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private ObservableCollection<JsonFile> JsonFiles = new ObservableCollection<JsonFile>();
         private JsonModel CurrentJson = new JsonModel();
-        private string CurrentJsonFileLocation;
+        //public string CurrentJsonFileLocation;
+        private string _currentJsonFileLocation;
+        public string CurrentJsonFileLocation
+        {
+            get { return this._currentJsonFileLocation; }
+            set
+            {
+                if (this._currentJsonFileLocation != value)
+                {
+                    this._currentJsonFileLocation = value;
+                    this.NotifyPropertyChanged("CurrentJsonFileLocation");
+                }
+            }
+        }
 
         private ObservableCollection<Hotkey> ObservableHotkeys = new ObservableCollection<Hotkey>();
 
@@ -67,6 +80,9 @@ namespace HotkeyHelper
             {
                 ObservableHotkeys.Add(hotkey);
             }
+
+            HotkeyAction.Text = "";
+            HotkeyDescription.Text = "";
         }
 
         private void RefreshHotkeysShown(string filePath)
@@ -82,16 +98,18 @@ namespace HotkeyHelper
         /// <summary>
         /// Refresh the list of jsons that a user can click on
         /// </summary>
-        private void RefreshJsonsShown()
+        private void RefreshJsonsShown(string selectedFile = "")
         {
             JsonFiles.Clear();
             var jsons = Directory.GetFiles(BasePath).Where(x => System.IO.Path.GetExtension(x) == ".json");
             foreach (var json in jsons)
             {
+                var fileName = System.IO.Path.GetFileName(json);
                 JsonFiles.Add(new()
                 {
-                    Name = System.IO.Path.GetFileName(json),
+                    Name = fileName,
                     FilePath = System.IO.Path.GetFullPath(json),
+                    IsSelected = fileName == selectedFile ? true : false
                 });
             }
         }
@@ -102,6 +120,7 @@ namespace HotkeyHelper
             HotkeyHelper.JsonFile current = (JsonFile)clickedButton.DataContext;
             CurrentJsonFileLocation = current.FilePath;
             RefreshHotkeysShown(current.FilePath);
+            RefreshJsonsShown(current.Name);
         }
 
         private void BtnAddNewJson_Click(object sender, RoutedEventArgs e)
@@ -112,7 +131,8 @@ namespace HotkeyHelper
             // does the file name already exist?
             // sanitization of the name
 
-            var newPath = System.IO.Path.Combine(BasePath, $"{text}.json");
+            var newFile = $"{text}.json";
+            var newPath = System.IO.Path.Combine(BasePath, newFile);
             var newJson = JsonConvert.SerializeObject(new JsonModel());
             byte[] jsonBytes = Encoding.UTF8.GetBytes(newJson);
 
@@ -124,14 +144,21 @@ namespace HotkeyHelper
             CurrentJsonFileLocation = newPath;
             RefreshHotkeysShown(newPath);
             NewJson.Text = "";
-            RefreshJsonsShown();
+            RefreshJsonsShown(newFile);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
     }
 
     public class JsonFile : INotifyPropertyChanged
     {
         private string name;
-        private string filePath;
         public string Name
         {
             get { return this.name; }
@@ -145,6 +172,7 @@ namespace HotkeyHelper
             }
         }
 
+        private string filePath;
         public string FilePath
         {
             get { return this.filePath; }
@@ -154,6 +182,20 @@ namespace HotkeyHelper
                 {
                     this.filePath = value;
                     this.NotifyPropertyChanged("FilePath");
+                }
+            }
+        }
+
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get { return this.isSelected; }
+            set
+            {
+                if (this.isSelected != value)
+                {
+                    this.isSelected = value;
+                    this.NotifyPropertyChanged("IsSelected");
                 }
             }
         }

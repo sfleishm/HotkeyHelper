@@ -1,0 +1,7 @@
+- [ ] ability to delete a json file
+- [x] visually show which file we have selected
+- [ ] favorite hotkeys? / grouping hotkeys in some order
+- [ ] on the left grid window, if you dont specifically click the button, the hotkeys will not load
+	- [ ] make the button width the entire row? 
+- [x] add placeholders for inputs
+- [ ] custom icon

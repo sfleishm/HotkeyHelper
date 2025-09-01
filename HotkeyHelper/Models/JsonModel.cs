@@ -8,7 +8,7 @@ namespace HotkeyHelper.Models
 {
     class JsonModel
     {
-        public List<Hotkey>? Hotkeys { get; set; }
+        public List<Hotkey> Hotkeys { get; set; } = new List<Hotkey>();
     }
 
     class Hotkey

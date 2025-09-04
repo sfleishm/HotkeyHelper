@@ -5,3 +5,4 @@
 	- [ ] make the button width the entire row? 
 - [x] add placeholders for inputs
 - [ ] custom icon
+- [ ] store last opened json for future close / opens

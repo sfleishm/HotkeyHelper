@@ -54,13 +54,6 @@ namespace HotkeyHelper
 
             RefreshJsonsShown();
             Processes.ItemsSource = JsonFiles;
-
-            string appDataBasePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var hotkeyHelperPath = System.IO.Path.Combine(appDataBasePath, "HotkeyHelper");
-
-            CurrentJsonFileLocation = System.IO.Path.Combine(hotkeyHelperPath, "chrome.json");
-
-            RefreshHotkeysShown(CurrentJsonFileLocation);
             Hotkeys.ItemsSource = ObservableHotkeys;
 
             this.DataContext = this;
